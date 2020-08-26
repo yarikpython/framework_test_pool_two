@@ -15,6 +15,9 @@ class MarketPage(BasePage):
     def go_to_product_page(self, how, what):
         item = self.driver.find_element(how, what)
         item.click()
+        product_window = self.driver.window_handles[-1]
+        self.driver.switch_to.window(product_window)
+        return product_window
 
     def get_product_name(self, how, what):
         item = self.driver.find_element(how, what)

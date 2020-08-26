@@ -5,7 +5,7 @@ class MainPageLocators:
     NAV_LINK_MARKET = (By.CSS_SELECTOR, '[data-id="market"]')
     NAV_LINK_MARKET_V2 = (By.XPATH, "//div[contains(text(), 'Маркет')]")
     NAV_LINK_MUSIC = (By.CSS_SELECTOR, '[data-id="music"]')
-    NAV_LINK_MUSIC_V2 = (By.XPATH, "//div[contains(text(), 'Музыка')]")
+    NAV_LINK_MUSIC_V2 = (By.XPATH, "//div[@class='services-new__item-title'][ contains(text(), 'Музыка')]")
 
 
 class MarketPageLocators:

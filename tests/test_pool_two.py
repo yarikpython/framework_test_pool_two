@@ -16,29 +16,23 @@ def test_market_search_and_compare(driver):
     url = 'https://yandex.ru'
     main_page = MainPage(driver, url)
     main_page.open()
-    main_page.go_to_market()
-    market_window = driver.window_handles[1]
-    driver.switch_to.window(market_window)
-    market_page = MarketPage(driver, driver.current_url)
+    market_window = main_page.go_to_market()
+    market_page = MarketPage(driver)
     market_page.search_product('Note 8')
     first_item_name = market_page.get_product_name(*MarketPageLocators.FIRST_RESULT_ITEM)
     market_page.go_to_product_page(*MarketPageLocators.FIRST_RESULT_ITEM)
-    product_window = driver.window_handles[2]
-    driver.switch_to.window(product_window)
-    product_page = ProductPage(driver, driver.current_url)
+    product_page = ProductPage(driver)
     product_page.add_to_comparison()
     driver.close()
     driver.switch_to.window(market_window)
     second_item_name = market_page.get_product_name(*MarketPageLocators.SECOND_RESULT_ITEM)
     market_page.go_to_product_page(*MarketPageLocators.SECOND_RESULT_ITEM)
-    product_window = driver.window_handles[2]
-    driver.switch_to.window(product_window)
-    product_page = ProductPage(driver, driver.current_url)
+    product_page = ProductPage(driver)
     product_page.add_to_comparison()
     driver.close()
     driver.switch_to.window(market_window)
     market_page.go_to_compare_page()
-    compare_page = ComparePage(driver, driver.current_url)
+    compare_page = ComparePage(driver)
     with allure.step('Screenshot compare page'):
         allure.attach(driver.get_screenshot_as_png(), name='screenshot compare', attachment_type=AttachmentType.PNG)
     assert compare_page.is_element_present(By.XPATH,
@@ -52,29 +46,23 @@ def test_add_to_compare_and_delete(driver):
     url = 'https://yandex.ru'
     main_page = MainPage(driver, url)
     main_page.open()
-    main_page.go_to_market()
-    market_window = driver.window_handles[1]
-    driver.switch_to.window(market_window)
-    market_page = MarketPage(driver, driver.current_url)
+    market_window = main_page.go_to_market()
+    market_page = MarketPage(driver)
     market_page.search_product('Note 8')
     first_item_name = market_page.get_product_name(*MarketPageLocators.FIRST_RESULT_ITEM)
     market_page.go_to_product_page(*MarketPageLocators.FIRST_RESULT_ITEM)
-    product_window = driver.window_handles[2]
-    driver.switch_to.window(product_window)
-    product_page = ProductPage(driver, driver.current_url)
+    product_page = ProductPage(driver)
     product_page.add_to_comparison()
     driver.close()
     driver.switch_to.window(market_window)
     second_item_name = market_page.get_product_name(*MarketPageLocators.SECOND_RESULT_ITEM)
     market_page.go_to_product_page(*MarketPageLocators.SECOND_RESULT_ITEM)
-    product_window = driver.window_handles[2]
-    driver.switch_to.window(product_window)
-    product_page = ProductPage(driver, driver.current_url)
+    product_page = ProductPage(driver)
     product_page.add_to_comparison()
     driver.close()
     driver.switch_to.window(market_window)
     market_page.go_to_compare_page()
-    compare_page = ComparePage(driver, driver.current_url)
+    compare_page = ComparePage(driver)
     assert compare_page.is_element_present(By.XPATH,
                                            f"//a[text() = '{first_item_name}']") and compare_page.is_element_present(
         By.XPATH, f"//a[text() = '{second_item_name}']")
@@ -92,9 +80,7 @@ def test_sort_by_price(driver):
     main_page = MainPage(driver, url)
     main_page.open()
     main_page.go_to_market()
-    market_window = driver.window_handles[1]
-    driver.switch_to.window(market_window)
-    market_page = MarketPage(driver, driver.current_url)
+    market_page = MarketPage(driver)
     market_page.search_product('экшн-камеры')
     market_page.sort_by_price_fade_out()
     time.sleep(1)
@@ -108,15 +94,13 @@ def test_sort_fridges_by_width(driver):
     main_page = MainPage(driver, url)
     main_page.open()
     main_page.go_to_market()
-    market_window = driver.window_handles[1]
-    driver.switch_to.window(market_window)
-    market_page = MarketPage(driver, driver.current_url)
+    market_page = MarketPage(driver)
     market_page.go_to_appliances()
-    appliance_page = MarketPage(driver, driver.current_url)
+    appliance_page = MarketPage(driver)
     appliance_page.go_to_fridges()
-    market_page_fridges = MarketPage(driver, driver.current_url)
+    market_page_fridges = MarketPage(driver)
     market_page_fridges.set_width_to('50')
-    market_page_sorted_fridges = MarketPage(driver, driver.current_url)
+    market_page_sorted_fridges = MarketPage(driver)
     time.sleep(5)
     assert market_page_sorted_fridges.get_width(
         *MarketPageLocators.PARAMS_FIRST_ITEM) <= 50 and market_page_sorted_fridges.get_width(
@@ -130,11 +114,9 @@ def test_search_music(driver):
     main_page = MainPage(driver, url)
     main_page.open()
     main_page.go_to_music()
-    music_window = driver.window_handles[1]
-    driver.switch_to.window(music_window)
-    music_page = MusicPage(driver, driver.current_url)
+    music_page = MusicPage(driver)
     music_page.search_music('Metallica')
-    music_page = MusicPage(driver, driver.current_url)
+    music_page = MusicPage(driver)
     with allure.step('Screenshot page after search'):
         allure.attach(driver.get_screenshot_as_png(), name='scrnst after search', attachment_type=AttachmentType.PNG)
     assert music_page.get_artist_title() == 'Metallica'
@@ -149,11 +131,9 @@ def test_play_top_song(driver):
     main_page = MainPage(driver, url)
     main_page.open()
     main_page.go_to_music()
-    music_window = driver.window_handles[1]
-    driver.switch_to.window(music_window)
-    music_page = MusicPage(driver, driver.current_url)
+    music_page = MusicPage(driver)
     music_page.search_music('Beyoncé')
-    music_page = MusicPage(driver, driver.current_url)
+    music_page = MusicPage(driver)
     music_page.click_first_top_song()
     assert music_page.check_play_or_pause() == 'play'
     music_page.click_first_top_song()
