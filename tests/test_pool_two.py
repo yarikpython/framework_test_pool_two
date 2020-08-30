@@ -119,9 +119,9 @@ def test_search_music(driver):
     music_page = MusicPage(driver)
     with allure.step('Screenshot page after search'):
         allure.attach(driver.get_screenshot_as_png(), name='scrnst after search', attachment_type=AttachmentType.PNG)
-    assert music_page.get_artist_title() == 'Metallica'
-    assert music_page.get_first_top_album_artist_title() == 'Metallica'
-    assert music_page.get_last_top_album_artist_title() == 'Metallica'
+    assert 'Metallica' in music_page.get_artist_title()
+    assert 'Metallica' in music_page.get_first_top_album_artist_title()
+    assert 'Metallica' in music_page.get_last_top_album_artist_title()
 
 
 @allure.feature('Yandex Music')
